@@ -45,6 +45,10 @@ provider "azurerm" {
 
 ## Add variables.tfvars file 
 
+Content:
+
+
+
 ## Create a SAS token to use when accessing the Azure Blob Storage
 
 ## Initialize Terraform using the token
