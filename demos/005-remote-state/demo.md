@@ -10,9 +10,9 @@ Content:
 ````
 terraform {
     backend "azurerm" {
-      resource_group_name = "rg-dart-devops-dev"
-      storage_account_name = "dartdevops"
-      container_name = "demotf"
+      resource_group_name = "<resource group name>"
+      storage_account_name = "<storage account name>"
+      container_name = "<container name>"
       key = "<yourname>.tfstate"
     }
 }
@@ -45,13 +45,37 @@ provider "azurerm" {
 
 ## Add variables.tfvars file 
 
+The tenant id and subscription id can be retrieved via the Azure CLI
+
+````
+az account show
+````
+
 Content:
 
+````
+azure_tenant_id = "<tenant id"
+
+azure_subscription_id = "<subscription id>"
+````
 
 
 ## Create a SAS token to use when accessing the Azure Blob Storage
 
+````
+az storage container generate-sas \
+    --account-name <storage-account> \
+    --name <container> \
+    --permissions rwdl \
+    --expiry <date-time> \
+    --auth-mode login \
+    --as-user
+````
 ## Initialize Terraform using the token
+
+````
+terraform init --backend-config="sas_token=?...."
+````
 
 ## Apply the Terraform Configuration
 
