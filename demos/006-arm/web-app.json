@@ -1,0 +1,53 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "appServicePlanName" : {
+            "type": "string",
+            "defaultValue": "asp-dmaxim-demo"
+        },
+        "appServicePlanSku" : {
+            "type" : "string",
+            "defaultValue": "S1"
+        },
+        "appServideName" : {
+            "type" : "string",
+            "defaultValue": "dmaxim-demo-one"
+        }
+    },
+    "functions": [],
+    "variables": {},
+    "resources": [
+        {
+            "name": "[parameters('appServicePlanName')]",
+            "type": "Microsoft.Web/serverfarms",
+            "location" : "[resourceGroup().location]",
+            "apiVersion": "2020-12-01",
+            "sku" : {
+                "name" : "[parameters('appServicePlanSku')]"
+
+            },
+            "properties" : {
+                "name" : "[parameters('appServicePlanSku')]",
+                "numberOfWorkers": 1
+            }
+        },
+        {
+            "name": "[parameters('appServideName')]",
+            "type" : "Microsoft.Web/sites",
+            "location" : "[resourceGroup().location]",
+            "apiVersion": "2020-12-01",
+            "dependsOn" : [
+                "[resourceId('Microsoft.Web/serverfarms', parameters('appServicePlanName'))]"
+            ],
+            "tags" : {
+                "environment" : "demo"
+            },
+            "properties" : {
+                "name" : "[parameters('appServideName')]",
+                "serverFarmId" :"[resourceId('Microsoft.Web/serverfarms', parameters('appServicePlanName'))]"
+            }
+        }
+    ],
+    "outputs": {}
+}
