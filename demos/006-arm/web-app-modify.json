@@ -13,6 +13,10 @@
         "appServiceName" : {
             "type" : "string",
             "defaultValue": "dmaxim-demo-one"
+        },
+        "appServiceTwo" : {
+            "type" :"string",
+            "defaultValue": "dmaxim-demo-two"
         }
     },
     "functions": [],
@@ -45,6 +49,23 @@
             },
             "properties" : {
                 "name" : "[parameters('appServiceName')]",
+                "serverFarmId" :"[resourceId('Microsoft.Web/serverfarms', parameters('appServicePlanName'))]"
+            }
+        },
+                {
+            "name": "[parameters('appServiceTwo')]",
+            "type" : "Microsoft.Web/sites",
+            "location" : "[resourceGroup().location]",
+            "apiVersion": "2020-12-01",
+            "dependsOn" : [
+                "[resourceId('Microsoft.Web/serverfarms', parameters('appServicePlanName'))]"
+            ],
+            "tags" : {
+                "environment" : "demo",
+                "application": "test-app"
+            },
+            "properties" : {
+                "name" : "[parameters('appServiceTwo')]",
                 "serverFarmId" :"[resourceId('Microsoft.Web/serverfarms', parameters('appServicePlanName'))]"
             }
         }
