@@ -12,7 +12,7 @@ terraform {
     backend "azurerm" {
       resource_group_name = "<resource group name>"
       storage_account_name = "<storage account name>"
-      container_name = "<container name>"
+      container_name = "demotf"
       key = "<yourname>.tfstate"
     }
 }
@@ -54,7 +54,7 @@ az account show
 Content:
 
 ````
-azure_tenant_id = "<tenant id"
+azure_tenant_id = "<tenant id>"
 
 azure_subscription_id = "<subscription id>"
 ````
@@ -67,14 +67,14 @@ az storage container generate-sas \
     --account-name <storage-account> \
     --name <container> \
     --permissions rwdl \
-    --expiry <date-time> \
+    --expiry 2021-10-29T12:27Z \
     --auth-mode login \
     --as-user
 ````
 ## Initialize Terraform using the token
 
 ````
-terraform init --backend-config="sas_token=?...."
+terraform init --backend-config="sas_token=?...." -reconfigure
 ````
 
 ## Apply the Terraform Configuration

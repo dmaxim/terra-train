@@ -1,8 +1,8 @@
 terraform {
     backend "azurerm" {
-      resource_group_name = "rg-dart-devops-dev"
-      storage_account_name = "dartdevops"
+      resource_group_name = "<storage account resource group>"
+      storage_account_name = "<storage account name>"
       container_name = "demotf"
-      key = "dmaxim.tfstate"
+      key = "<yourname>.tfstate"
     }
 }
