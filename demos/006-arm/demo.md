@@ -28,7 +28,7 @@ az deployment group create --resource-group <resource-group-name> --template-fil
 
 ## Revise to remove the additional app service
 ````
-az deployment group create --resource-group <resource-group-name> --template-file web-app.json
+az deployment group create --resource-group <resource-group-name> --template-file web-app.json --mode Complete
 ````
 ## Clean up
 
