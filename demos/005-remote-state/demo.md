@@ -58,23 +58,31 @@ azure_tenant_id = "<tenant id>"
 
 azure_subscription_id = "<subscription id>"
 ````
+## SAS Token
+A SAS Token can be used to access the shared state storage in Azure.
 
+### Create a SAS Token in the Azure Portal
 
-## Create a SAS token to use when accessing the Azure Blob Storage
-
-````
-az storage container generate-sas \
-    --account-name <storage-account> \
-    --name <container> \
-    --permissions rwdl \
-    --expiry 2021-10-29T12:27Z \
-    --auth-mode login \
-    --as-user
-````
-## Initialize Terraform using the token
+### Initialize Terraform using the token
 
 ````
 terraform init --backend-config="sas_token=?...." -reconfigure
+````
+
+## Access Key
+
+Instead of a SAS Token an access key can be used to access the shared state storage in Azure.
+
+Store the access key as an environment variable:
+
+````
+RESOURCE_GROUP_NAME=<resource group name>
+STORAGE_ACCOUNT_NAME=<storage account name>
+
+ACCOUNT_KEY=$(az storage account keys list --resource-group $RESOURCE_GROUP_NAME --account-name $STORAGE_ACCOUNT_NAME --query '[0].value' -o tsv)
+export ARM_ACCESS_KEY=$ACCOUNT_KEY
+
+terraform init
 ````
 
 ## Apply the Terraform Configuration
